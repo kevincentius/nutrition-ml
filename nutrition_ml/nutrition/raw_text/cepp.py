@@ -17,7 +17,7 @@ if __name__ == '__main__':
             print('working on text', i)
             path = '{}/_origin/{}/{}.txt'.format(data_set.path, levels[l], i)
             data_set.import_raw_text(path, text_id)
-            labels.append([l])
+            labels.append(l)
             text_id += 1
             
     data_set.set_labels(labels)

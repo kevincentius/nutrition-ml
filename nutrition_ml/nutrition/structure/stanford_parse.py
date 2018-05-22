@@ -4,8 +4,6 @@ This script is meant to run StanfordCoreNLP parser and save the results for a wh
 This is a preparation step for feature extraction that takes a long time,
     so it is a good idea to separate this from the other steps.  
 '''
-import os
-import pickle
 import time
 
 from pycorenlp.corenlp import StanfordCoreNLP
@@ -13,6 +11,7 @@ from pycorenlp.corenlp import StanfordCoreNLP
 from nutrition.structure.data_set import DataSet
 from nutrition.structure.counter import Counter
 import sys
+from nutrition.structure.environment import STANFORD_SERVER
 
 
 def parse(data_set):
@@ -20,7 +19,7 @@ def parse(data_set):
     counter = Counter(data_set.stanford_path)
     
     # prepare to use Stanford parser
-    nlp = StanfordCoreNLP('http://localhost:9000')
+    nlp = StanfordCoreNLP(STANFORD_SERVER)
     
     start = time.time()
     while counter.count < data_set.data['count']:
@@ -49,7 +48,7 @@ def parse(data_set):
         print('%i, %i%% %.2f seconds (%.0f total))' % (counter.count-1, 100*counter.count/data_set.data['count'], time.time() - doc_start, time.time() - start))
 
 if __name__ == '__main__':
-    data_set = DataSet('nil')
+    data_set = DataSet('newsela')
     parse(data_set)
     
     

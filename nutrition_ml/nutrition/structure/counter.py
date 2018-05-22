@@ -20,10 +20,13 @@ class Counter(object):
         self.pending += 1
         
         if self.pending >= self.commit_interval:
-            if self.on_commit is not None:
-                self.on_commit()
+            self.commit()
             
-            with open(self.path, 'w') as count_file:
-                count_file.write(str(self.count))
-            
-            self.pending = 0
+    def commit(self):
+        if self.on_commit is not None:
+            self.on_commit()
+        
+        with open(self.path, 'w') as count_file:
+            count_file.write(str(self.count))
+        
+        self.pending = 0
